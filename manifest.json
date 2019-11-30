@@ -14,7 +14,7 @@
     },
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": ["in-content.js", "bootstrap.min.js", "jquery.min.js"]
+        "js": ["in-content.js"]
     }],
     "background": {
         "scripts": ["background.js"],
