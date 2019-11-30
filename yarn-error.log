@@ -2,29 +2,29 @@ Arguments:
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
 
 PATH: 
-  C:\Program Files\ConEmu\ConEmu\Scripts;C:\Program Files\ConEmu;C:\Program Files\ConEmu\ConEmu;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin64;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\Win64;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PuTTY\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\MiKTeX 2.9\miktex\bin\x64\;C:\Program Files\nodejs\;C:\Program Files (x86)\WinMerge;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Users\james\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\james\AppData\Local\Programs\Python\Python37\;C:\Users\james\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm 2019.2\bin;C:\Program Files\JetBrains\JetBrains Rider 2019.2\bin;C:\Program Files\JetBrains\CLion 2019.2\bin;C:\Users\james\AppData\Roaming\Python\Python37\Scripts;C:\cygwin64\bin;C:\Program Files\Racket;C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.3\bin;C:\Users\james\AppData\Roaming\npm;C:\Users\james\AppData\Local\Yarn\bin;C:\Users\james\AppData\Local\GitHubDesktop\bin
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Code\minGW\bin;C:\Code\CMake\bin;C:\Gradle\gradle-5.4.1\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\amani\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\amani\AppData\Local\Programs\Python\Python37\;C:\Program Files\Ruby26-x64\bin;C:\Program Files\MiKTeX 2.9\miktex\bin\x64\;C:\Users\amani\AppData\Local\Microsoft\WindowsApps\;C:\Windows\System32\;C:\Code\minGW\bin\;C:\Users\amani\AppData\Local\Programs\Microsoft VS Code\bin\;C:\Program Files\ffmpeg-20191023-ac0f5f4-win64-static\bin;C:\Program Files\Git\cmd;;C:\Users\amani\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\WebStorm 2019.3\bin;;C:\Users\amani\AppData\Roaming\npm;C:\Users\amani\AppData\Local\Yarn\bin
 
 Yarn version: 
-  1.19.1
+  1.19.2
 
 Node version: 
-  10.16.3
+  12.13.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.6.tgz: Request failed "404 Not Found"
+  Error: https://registry.yarnpkg.com/flatmap-stream/-/flatmap-stream-0.1.0.tgz: Request failed "404 Not Found"
       at ResponseError.ExtendableBuiltin (C:\Program Files (x86)\Yarn\lib\cli.js:696:66)
       at new ResponseError (C:\Program Files (x86)\Yarn\lib\cli.js:802:124)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:66105:16)
-      at Request.emit (events.js:198:13)
-      at Request.module.exports.Request.onRequestResponse (C:\Program Files (x86)\Yarn\lib\cli.js:141441:10)
-      at ClientRequest.emit (events.js:203:15)
-      at HTTPParser.parserOnIncomingClient [as onIncoming] (_http_client.js:556:21)
-      at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
-      at TLSSocket.socketOnData (_http_client.js:442:20)
-      at TLSSocket.emit (events.js:198:13)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:66106:16)
+      at Request.emit (events.js:210:5)
+      at Request.module.exports.Request.onRequestResponse (C:\Program Files (x86)\Yarn\lib\cli.js:141463:10)
+      at ClientRequest.emit (events.js:210:5)
+      at HTTPParser.parserOnIncomingClient [as onIncoming] (_http_client.js:583:27)
+      at HTTPParser.parserOnHeadersComplete (_http_common.js:115:17)
+      at TLSSocket.socketOnData (_http_client.js:456:22)
+      at TLSSocket.emit (events.js:210:5)
 
 npm manifest: 
   {
@@ -32,7 +32,7 @@ npm manifest:
       "version": "0.0.9",
       "description": "Chrome extension boilerplate, replace all values!",
       "main": "src/index.js",
-      "repository": "git@github.com:edrpls/ubc-lhd.git",
+      "repository": "git@github.com:jamesrosstwo/ubc-lhd.git",
       "license": "MIT",
       "devDependencies": {
           "babel-cli": "^6.26.0",
@@ -43,9 +43,11 @@ npm manifest:
           "babel-preset-env": "^1.6.1",
           "copy-webpack-plugin": "^4.0.1",
           "crx-webpack-plugin": "^0.1.5",
+          "css-loader": "^3.2.0",
           "eslint": "^4.2.0",
           "eslint-plugin-react": "^7.1.0",
           "rimraf": "^2.6.1",
+          "style-loader": "^1.0.1",
           "webpack": "^3.2.0"
       },
       "scripts": {

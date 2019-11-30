@@ -5,7 +5,7 @@
  * It shows how to access global variables from background.js.
  * Note that getViews could be used instead to access other scripts.
  *
- * A port to the active tab is open to send messages to its in-content.js script.
+ * A port to the active tab is open to send messages to its content.js script.
  *
  */
 
@@ -17,7 +17,7 @@ const initPopupScript = () => {
     // Do anything with the exposed variables from background.js
     console.log(backgroundWindow.sampleBackgroundGlobal);
 
-    // This port enables a long-lived connection to in-content.js
+    // This port enables a long-lived connection to content.js
     let port = null;
 
     // Send messages to the open port
@@ -46,7 +46,7 @@ const initPopupScript = () => {
         port = chrome.tabs.connect(tab.id, { name: 'ubc-lhd' });
         // Set up the message listener
         port.onMessage.addListener(messageHandler);
-        // Send a test message to in-content.js
+        // Send a test message to content.js
         sendPortMessage('Message from popup!');
     });
 };
