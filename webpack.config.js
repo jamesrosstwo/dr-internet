@@ -7,7 +7,9 @@ module.exports = {
     entry: {
         popup: './src/js/popup.js',
         background: './src/js/background.js',
-        'in-content': './src/js/in-content.js'
+        'in-content': './src/js/in-content.js',
+        'bootstrap.min': './src/js/bootstrap.min.js',
+        'jquery.min': './src/js/jquery-3.2.1.min.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -18,20 +20,27 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
 
     module: {
+        rules:[
+            {
+                test:/\.css$/,
+                use:['style-loader','css-loader']
+            }
+        ],
         loaders: [
             {
                 test: /\.js?$/,
                 include: [path.resolve(__dirname, 'src')],
                 loader: 'babel-loader'
             }
-        ]
+        ],
     },
 
     plugins: [
         new CopyWebpackPlugin([
             { from: './manifest.json' },
             { from: './src/images' },
-            { from: './src/views' }
-        ])
+            { from: './src/views' },
+            { from: './src/css' }
+        ]),
     ]
 };

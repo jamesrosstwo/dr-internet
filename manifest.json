@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "chrome-extension-template",
+    "name": "ubc-lhd",
     "version": "0.0.1",
     "description": "Chrome extension boilerplate, replace all values!",
     "icons": {
@@ -12,18 +12,16 @@
         "default_title": "Boilerplate popup!",
         "default_popup": "popup.html"
     },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["in-content.js"]
-        }
-    ],
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["in-content.js", "bootstrap.min.js", "jquery.min.js"]
+    }],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
     },
-    "content_security_policy":
-        "script-src 'self' 'unsafe-eval'; object-src 'self'; img-src * data: 'self' 'unsafe-eval'",
+
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'; img-src * data: 'self' 'unsafe-eval'",
     "offline_enabled": true,
     "permissions": ["tabs", "<all_urls>", "activeTab"]
 }

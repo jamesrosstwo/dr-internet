@@ -10,6 +10,7 @@
  */
 
 // Start the popup script, this could be anything from a simple script to a webapp
+
 const initPopupScript = () => {
     // Access the background window object
     const backgroundWindow = chrome.extension.getBackgroundPage();
@@ -42,7 +43,7 @@ const initPopupScript = () => {
     // Find the current active tab, then open a port to it
     getTab().then(tab => {
         // Connects to tab port to enable communication with inContent.js
-        port = chrome.tabs.connect(tab.id, { name: 'chrome-extension-template' });
+        port = chrome.tabs.connect(tab.id, { name: 'ubc-lhd' });
         // Set up the message listener
         port.onMessage.addListener(messageHandler);
         // Send a test message to in-content.js

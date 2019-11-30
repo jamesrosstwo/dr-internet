@@ -1,4 +1,4 @@
-# chrome-extension-template
+# ubc-lhd
 
 ## Introduction
 
@@ -11,13 +11,13 @@ Not all extensions will need of all scripts or all types of messaging. All code 
 Clone the repo:
 
 ```
-git clone git@github.com:edrpls/chrome-extension-template.git name-of-your-project
+git clone git@github.com:edrpls/ubc-lhd.git name-of-your-project
 ```
 
 Set git to track your own repository instead of this one:
 
 ```
-git remote set-url --delete origin git@github.com:edrpls/chrome-extension-template.git # Remove old origin
+git remote set-url --delete origin git@github.com:edrpls/ubc-lhd.git # Remove old origin
 git remote set-url --add origin [YOUR REPO URL] # Add new origin
 ```
 

@@ -5,6 +5,7 @@
 * Note that in this scenario the port is open from the popup, but other extensions may open it from the background page or not even have either background.js or popup.js.
 * */
 
+
 // Extension port to communicate with the popup, also helps detecting when it closes
 let port = null;
 
@@ -34,3 +35,7 @@ const handleBackgroundResponse = response =>
 
 // Send a message to background.js
 chrome.runtime.sendMessage('Message from in-content.js!', handleBackgroundResponse);
+
+// $.get(chrome.extension.getURL('/src/views/chatbutton.html'), function(data) {
+//     $($.parseHTML(data)).appendTo('body');
+// });
