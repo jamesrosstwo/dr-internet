@@ -39,47 +39,44 @@ const handleBackgroundResponse = response =>
 chrome.runtime.sendMessage('Message from in-content.js!', handleBackgroundResponse);
 
 let chatbotHtmlString = `
-<!--
-Inspired by https://dribbble.com/supahfunk
--->
+<div id="help-chatbot-button"></div>
 <section class="avenue-messenger">
-  <div class="menu">
-   <div class="items"><span>
-     <a href="#" title="Minimize">&mdash;</a><br>
-<!--     
-     <a href="">enter email</a><br>
-     <a href="">email transcript</a><br>-->
-     <a href="#" title="End Chat">&#10005;</a>
-     
-     </span></div>
-    <div class="button">...</div>
-  </div>
-  <div class="agent-face">
-    <div class="half">
-     <img class="agent circle" src="https://cdn3.iconfinder.com/data/icons/chat-bot-emoji-blue-filled-color/300/14134081Untitled-3-512.png" alt="Chatbot"></div>
-  </div>
-<div class="chat">
-  <div class="chat-title">
-    <h1>Chatbot</h1>
-  <!--  <figure class="avatar">
+    <div class="menu">
+        <div class="items"><span>
+                <a href="#" title="Minimize">&mdash;</a><br>
+                <a href="#" title="End Chat">&#10005;</a>
+
+            </span></div>
+        <div class="button">...</div>
+    </div>
+    <div class="agent-face">
+        <div class="half">
+            <img class="agent circle"
+                src="https://cdn3.iconfinder.com/data/icons/chat-bot-emoji-blue-filled-color/300/14134081Untitled-3-512.png"
+                alt="Chatbot"></div>
+    </div>
+    <div class="chat">
+        <div class="chat-title">
+            <h1>Chatbot</h1>
+            <!--  <figure class="avatar">
       <img src="https://cdn3.iconfinder.com/data/icons/chat-bot-emoji-blue-filled-color/300/14134081Untitled-3-512.png" /></figure>-->
-  </div>
-  <div class="messages">
-    <div class="messages-content"></div>
-  </div>
-  <div class="message-box">
-    <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-    <button type="submit" class="message-submit">Send</button>
-  </div>
-</div>
-  </div>
-<!--<div class="bg"></div>-->
+        </div>
+        <div class="messages">
+            <div class="messages-content"></div>
+        </div>
+        <div class="message-box">
+            <textarea type="text" class="message-input"
+                placeholder="Type message..."></textarea>
+            <button type="submit" class="message-submit">Send</button>
+        </div>
+    </div>
+</section>
 `;
 
 var chatBot = document.createElement('div');
 chatBot.innerHTML = chatbotHtmlString;
 
-document.body.appendChild(chatBot);
+$("body").append(chatBot);
 
 var $messages = $('.messages-content'),
     d,
@@ -87,19 +84,11 @@ var $messages = $('.messages-content'),
     m,
     i = 0;
 
-$(window).load(function() {
-    $messages.mCustomScrollbar();
+$(window).on("load", function() {
     setTimeout(function() {
         fakeMessage();
     }, 100);
 });
-
-function updateScrollbar() {
-    $messages.mCustomScrollbar('update').mCustomScrollbar('scrollTo', 'bottom', {
-        scrollInertia: 10,
-        timeout: 0
-    });
-}
 
 function setDate() {
     d = new Date();
@@ -123,7 +112,6 @@ function insertMessage() {
         .addClass('new');
     setDate();
     $('.message-input').val(null);
-    updateScrollbar();
     setTimeout(function() {
         fakeMessage();
     }, 1000 + Math.random() * 20 * 100);
@@ -151,7 +139,6 @@ function fakeMessage() {
     $(
         '<div class="message loading new"><figure class="avatar"><img src="http://askavenue.com/img/17.jpg" /></figure><span></span></div>'
     ).appendTo($('.mCSB_container'));
-    updateScrollbar();
 
     setTimeout(function() {
         $('.message.loading').remove();
@@ -163,7 +150,6 @@ function fakeMessage() {
             .appendTo($('.mCSB_container'))
             .addClass('new');
         setDate();
-        updateScrollbar();
         i++;
     }, 1000 + Math.random() * 20 * 100);
 }
