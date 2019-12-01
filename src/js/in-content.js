@@ -7,7 +7,11 @@
 
 // Extension port to communicate with the popup, also helps detecting when it closes
 
-import * as $ from './jquery.js';
+const $ = require("jquery");
+const Vue = require("vue");
+const BotUI = require("botui");
+const AssistantV2 = require('ibm-watson/assistant/v2');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 let port = null;
 
@@ -38,123 +42,109 @@ const handleBackgroundResponse = response =>
 // Send a message to background.js
 chrome.runtime.sendMessage('Message from in-content.js!', handleBackgroundResponse);
 
-let chatbotHtmlString = `
-<div id="help-chatbot-button"></div>
-<section class="avenue-messenger">
-    <div class="menu">
-        <div class="items"><span>
-                <a href="#" title="Minimize">&mdash;</a><br>
-                <a href="#" title="End Chat">&#10005;</a>
 
-            </span></div>
-        <div class="button">...</div>
+const assistantId = "5fe4c9f1-89c9-4b24-be16-4c4b2c69ac70";
+const assistantUrl = "https://gateway-wdc.watsonplatform.net/assistant/api";
+const apiKey = "gAigBCO4IRFtyri4iSEIOOtFqoboEGP8h4x0Zz8pc8MV";
+
+var options = {
+    url: assistantUrl + '/v2/assistants/' + assistantId + '/sessions',
+    method: 'POST',
+    auth: {
+        'user': 'apikey',
+        'pass': apiKey
+    }
+};
+
+const service = new AssistantV2({
+  version: '2019-02-28',
+  authenticator: new IamAuthenticator({
+    apikey: apiKey,
+  }),
+  url: assistantUrl,
+});
+
+service.createSession({
+  assistantId: assistantId
+})
+  .then(res => {
+    console.log(JSON.stringify(res, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+// $.post(options.url, options.auth).done(function(data){
+//     console.log(data);
+// });
+
+// $.ajax({
+//     type: "POST",
+//     url: options.url,
+//     data: options.auth,
+//     dataType: "xhr"
+//   });
+
+let chatbotHtmlString = `
+
+<div class="botui-app-container">
+    <div id="my-botui-app">
+        <bot-ui></bot-ui>
     </div>
-    <div class="agent-face">
-        <div class="half">
-            <img class="agent circle"
-                src="https://cdn3.iconfinder.com/data/icons/chat-bot-emoji-blue-filled-color/300/14134081Untitled-3-512.png"
-                alt="Chatbot"></div>
+    <div class="chat-message clearfix">
+    <textarea name="message-to-send" id="message-to-send"
+        placeholder="Type your message" rows="3"></textarea>
+
+    <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+    <i class="fa fa-file-image-o"></i>
+
+    <button id="chatbot-send">Send</button>
+
     </div>
-    <div class="chat">
-        <div class="chat-title">
-            <h1>Chatbot</h1>
-            <!--  <figure class="avatar">
-      <img src="https://cdn3.iconfinder.com/data/icons/chat-bot-emoji-blue-filled-color/300/14134081Untitled-3-512.png" /></figure>-->
-        </div>
-        <div class="messages">
-            <div class="messages-content"></div>
-        </div>
-        <div class="message-box">
-            <textarea type="text" class="message-input"
-                placeholder="Type message..."></textarea>
-            <button type="submit" class="message-submit">Send</button>
-        </div>
-    </div>
-</section>
+</div>
 `;
 
 var chatBot = document.createElement('div');
 chatBot.innerHTML = chatbotHtmlString;
 
-$("body").append(chatBot);
+let sessionId = 
 
-var $messages = $('.messages-content'),
-    d,
-    h,
-    m,
-    i = 0;
+$('body').append(chatBot);
 
-$(window).on("load", function() {
-    setTimeout(function() {
-        fakeMessage();
-    }, 100);
+$('#help-chatbot-button').click(function() {
+    $(this).hide();
+    $('.botui-app-container').show();
 });
 
-function setDate() {
-    d = new Date();
-    if (m != d.getMinutes()) {
-        m = d.getMinutes();
-        $('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo(
-            $('.message:last')
-        );
-        $('<div class="checkmark-sent-delivered">&check;</div>').appendTo($('.message:last'));
-        $('<div class="checkmark-read">&check;</div>').appendTo($('.message:last'));
-    }
+const botui = BotUI('my-botui-app', {
+    vue: Vue // pass the dependency.
+});
+
+
+function getBotResponse(){
+
 }
 
-function insertMessage() {
-    msg = $('.message-input').val();
-    if ($.trim(msg) == '') {
-        return false;
-    }
-    $('<div class="message message-personal">' + msg + '</div>')
-        .appendTo($('.mCSB_container'))
-        .addClass('new');
-    setDate();
-    $('.message-input').val(null);
-    setTimeout(function() {
-        fakeMessage();
-    }, 1000 + Math.random() * 20 * 100);
+function botMessage(text){
+    botui.message.bot({content: text});
 }
 
-$('.message-submit').click(function() {
-    insertMessage();
-});
-
-$(window).on('keydown', function(e) {
-    if (e.which == 13) {
-        insertMessage();
-        return false;
-    }
-});
-
-var Fake = [
-    
-];
-
-function fakeMessage() {
-    if ($('.message-input').val() != '') {
-        return false;
-    }
-    $(
-        '<div class="message loading new"><figure class="avatar"><img src="http://askavenue.com/img/17.jpg" /></figure><span></span></div>'
-    ).appendTo($('.mCSB_container'));
-
-    setTimeout(function() {
-        $('.message.loading').remove();
-        $(
-            '<div class="message new"><figure class="avatar"><img src="http://askavenue.com/img/17.jpg" /></figure>' +
-                Fake[i] +
-                '</div>'
-        )
-            .appendTo($('.mCSB_container'))
-            .addClass('new');
-        setDate();
-        i++;
-    }, 1000 + Math.random() * 20 * 100);
+function humanMessage(msg){
+    let $hMessage = $("<div>", {"class": "human-message"});
+    $hMessage.text(msg);
+    $(".botui-messages-container").append($hMessage);
 }
 
-$('.button').click(function() {
-    $('.menu .items span').toggleClass('active');
-    $('.menu .button').toggleClass('active');
-});
+function sendMessage(msg){
+    humanMessage(msg);
+}
+
+$("#chatbot-send").click(function(){
+    let msg = $("#message-to-send").val()
+    sendMessage(msg);
+    $("#message-to-send").val("");
+    botMessage(getBotResponse(msg));
+})
+
+
+botMessage(getBotResponse(""));

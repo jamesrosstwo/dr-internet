@@ -7,8 +7,7 @@ module.exports = {
     entry: {
         popup: './src/js/popup.js',
         background: './src/js/background.js',
-        'in-content': './src/js/in-content.js',
-        'jquery': './src/js/jquery.js',
+        'bundle': './src/js/bundle.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -19,10 +18,10 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
 
     module: {
-        rules:[
+        rules: [
             {
-                test:/\.css$/,
-                use:['style-loader','css-loader']
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ],
         loaders: [
@@ -31,7 +30,13 @@ module.exports = {
                 include: [path.resolve(__dirname, 'src')],
                 loader: 'babel-loader'
             }
-        ],
+        ]
+    },
+
+    resolve: {
+        alias: {
+            vue: 'dist/vue.js'
+        }
     },
 
     plugins: [
@@ -40,6 +45,6 @@ module.exports = {
             { from: './src/images' },
             { from: './src/views' },
             { from: './src/css' }
-        ]),
+        ])
     ]
 };

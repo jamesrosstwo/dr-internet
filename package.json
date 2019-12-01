@@ -38,6 +38,11 @@
         "verbose": true
     },
     "dependencies": {
-        "nodemon": "^1.14.12"
+        "botui": "^0.3.9",
+        "browserify": "^16.5.0",
+        "ibm-watson": "^5.2.0",
+        "jquery": "^3.4.1",
+        "nodemon": "^1.14.12",
+        "vue": "^2.6.10"
     }
 }

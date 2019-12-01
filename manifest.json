@@ -14,7 +14,7 @@
     },
     "content_scripts": [{
         "matches": ["<all_urls>"],
-        "js": ["in-content.js"],
+        "js": ["bundle.js"],
         "css": ["content.css"]
     }],
     "background": {
