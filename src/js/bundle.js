@@ -67084,9 +67084,9 @@ if (process.env.NODE_ENV === 'production') {
 
 // Extension port to communicate with the popup, also helps detecting when it closes
 
-const $ = require("jquery");
-const Vue = require("vue");
-const BotUI = require("botui");
+const $ = require('jquery');
+const Vue = require('vue');
+const BotUI = require('botui');
 const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
@@ -67119,54 +67119,47 @@ const handleBackgroundResponse = response =>
 // Send a message to background.js
 chrome.runtime.sendMessage('Message from in-content.js!', handleBackgroundResponse);
 
-
-const assistantId = "5fe4c9f1-89c9-4b24-be16-4c4b2c69ac70";
-const assistantUrl = "https://gateway-wdc.watsonplatform.net/assistant/api";
-const apiKey = "gAigBCO4IRFtyri4iSEIOOtFqoboEGP8h4x0Zz8pc8MV";
+const assistantId = '5fe4c9f1-89c9-4b24-be16-4c4b2c69ac70';
+const assistantUrl = 'https://gateway-wdc.watsonplatform.net/assistant/api';
+const apiKey = 'gAigBCO4IRFtyri4iSEIOOtFqoboEGP8h4x0Zz8pc8MV';
 
 var options = {
     url: assistantUrl + '/v2/assistants/' + assistantId + '/sessions',
     method: 'POST',
     auth: {
-        'user': 'apikey',
-        'pass': apiKey
+        user: 'apikey',
+        pass: apiKey
     }
 };
-
-const service = new AssistantV2({
-  version: '2019-02-28',
-  authenticator: new IamAuthenticator({
-    apikey: apiKey,
-  }),
-  url: assistantUrl,
+$(document).ready(function() {
+    const service = new AssistantV2({
+        version: '2019-02-28',
+        authenticator: new IamAuthenticator({
+            apikey: "gAigBCO4IRFtyri4iSEIOOtFqoboEGP8h4x0Zz8pc8MV"
+        }),
+        url: "https://gateway-wdc.watsonplatform.net/assistant/api"
+    });
+    setTimeout(function() {
+        console.log(service);
+        service
+            .createSession({
+                assistantId: "5fe4c9f1-89c9-4b24-be16-4c4b2c69ac70"
+            })
+            .then(res => {
+                console.log(JSON.stringify(res, null, 2));
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, 1000);
 });
-
-service.createSession({
-  assistantId: assistantId
-})
-  .then(res => {
-    console.log(JSON.stringify(res, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-// $.post(options.url, options.auth).done(function(data){
-//     console.log(data);
-// });
-
-// $.ajax({
-//     type: "POST",
-//     url: options.url,
-//     data: options.auth,
-//     dataType: "xhr"
-//   });
-
 let chatbotHtmlString = `
 
 <div class="botui-app-container">
     <div id="my-botui-app">
-        <bot-ui></bot-ui>
+        <bot-ui>
+
+        </bot-ui>
     </div>
     <div class="chat-message clearfix">
     <textarea name="message-to-send" id="message-to-send"
@@ -67184,8 +67177,6 @@ let chatbotHtmlString = `
 var chatBot = document.createElement('div');
 chatBot.innerHTML = chatbotHtmlString;
 
-let sessionId = 
-
 $('body').append(chatBot);
 
 $('#help-chatbot-button').click(function() {
@@ -67197,32 +67188,45 @@ const botui = BotUI('my-botui-app', {
     vue: Vue // pass the dependency.
 });
 
-
-function getBotResponse(){
-
+function getBotResponse(msg) {
+    service
+        .message({
+            assistantId: assistantId,
+            sessionId: service.sessionId,
+            input: {
+                message_type: 'text',
+                text: msg
+            }
+        })
+        .then(res => {
+            console.log(res);
+            return JSON.stringify(res, null, 2);
+        })
+        .catch(err => {
+            return 'Chatbot could not be reached. Please try again later.';
+        });
 }
 
-function botMessage(text){
-    botui.message.bot({content: text});
+function botMessage(text) {
+    botui.message.bot({ content: text });
 }
 
-function humanMessage(msg){
-    let $hMessage = $("<div>", {"class": "human-message"});
+function humanMessage(msg) {
+    let $hMessage = $('<div>', { class: 'human-message' });
     $hMessage.text(msg);
-    $(".botui-messages-container").append($hMessage);
+    $('.botui-messages-container').append($hMessage);
 }
 
-function sendMessage(msg){
+function sendMessage(msg) {
     humanMessage(msg);
+    getBotResponse(msg);
 }
 
-$("#chatbot-send").click(function(){
-    let msg = $("#message-to-send").val()
+$('#chatbot-send').click(function() {
+    let msg = $('#message-to-send').val();
     sendMessage(msg);
-    $("#message-to-send").val("");
-    botMessage(getBotResponse(msg));
-})
+    $('#message-to-send').val('');
+});
 
-
-botMessage(getBotResponse(""));
+humanMessage("Hello!");
 },{"botui":214,"ibm-watson/assistant/v2":253,"ibm-watson/auth":254,"jquery":258,"vue":290}]},{},[292]);
